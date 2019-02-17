@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Resume Form</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<meta name="viewport" content="width=device-width initial-scale=1.0">
+</head>
+<body id="form">
+	<div class="main">
+<div class="sub">
+	<h1>Career Objective</h1>
+	<select id="career" name:"career">
+		<option>Select your career objective</option>
+		<option>To be placed in any MNC</option>
+		<option>To work in google</option>
+		<option>To be in IT Industry</option>
+	</select>
+	
+</div>
+<div class="sub-1">
+	<h1>Personal Information</h1>
+	<input id="name" type="text" name="name" placeholder="enter your name"><br>
+	<input id="roll" type="text" name="roll" placeholder="enter your roll number"><br>
+	<input id="mobile" type="number" name="mobile" placeholder="enter your mobile number"><br>
+	<input id="email" type="text" name="email" placeholder="enter your E-mail"><br>
+	<input id="place" type="text" name="place" placeholder="enter your place">
+</div>
+<!-- PG DETAILS -->
+<div class="sub-1">
+	<h1>Post Graduation</h1>
+	<label for="pdegree">
+	<select id="pdegree" name:"pdegree">
+		<option>Degree</option>
+		<option>M.tech</option>
+		<option>MCA</option>
+		<option>MBA</option>
+		<option>M.sc</option>
+	</select></label><br>
+	<label for="pinst">
+	<input id="pinst" type="text" name="pinst" placeholder="enter your Institute name"></label>
+	<br>
+	<label for="pper">
+	<input id="pper" type="number" name="pper" placeholder="enter your aggregate(Percentage)"></label><br>
+	<label for="pyop">
+	<input id="pyop" type="number" name="pyop" placeholder="enter year of passing "></label><br>
+</div>
+<!-- GRADUATION DETAILS -->
+<div class="sub-1">
+	<h1>Graduation Details</h1>
+	<label for="gdegree">
+	<select id="gdegree" name:"gdegree">
+		<option>B.tech</option>
+		<option>CSE</option>
+		<option>ECE</option>
+		<option>IT</option>
+		<option>MECH</option>
+		<option>CIVIL</option>
+		<option>EEE</option>
+			</select></label><br>
+	<label for="ginst">
+	<input id="ginst" type="text" name="ginst" placeholder="enter your Institute name"></label><br>
+	<label for="gper">
+	<input id="gper" type="number" name="gper" placeholder="enter your aggregate(Percentage)"></label><br>
+	<label for="gyop">
+	<input id="gyop" type="number" name="gyop" placeholder="enter year of passing "></label><br>
+</div>
+<div class="sub-1">
+	<h1>Intermediate Details</h1>
+	<label for="idegree">
+	<select id="idegree" name:"idegree">
+		<option>Degree</option>
+		<option>MPC</option>
+		<option>BiPC</option>
+	</select></label><br>
+	<label for="iinst">
+	<input id="iinst" type="text" name="iinst" placeholder="enter your college name"></label><br>
+	<label for="iper">
+	<input id="iper" type="number" name="iper" placeholder="enter your aggregate(Percentage)"></label><br>
+	<label for="iyop">
+	<input id="iyop" type="number" name="iyop" placeholder="enter year of passing "></label><br>
+</div>
+<div class="sub-2">
+	<h1>SSC Details</h1>
+	<label for="tdegree">
+	<select id="tdegree" name:"tdegree">
+		<option>SSC</option>
+		<option>CBSE</option>
+		<option>ICSE</option>
+	</select></label><br>
+	<label for="tinst">
+	<input id="tinst" type="text" name="tinst" placeholder="enter your School name"></label><br>
+	<label for="tper">
+	<input id="tper" type="number" name="tper" placeholder="enter your aggregate(Percentage)"></label><br>
+	<label for="tyop">
+	<input id="tyop" type="number" name="tyop" placeholder="enter year of passing "></label><br>
+</div>
+</div>
+<button type="button" id="button" name="button" onclick="submitdata()"> SUBMIT</button>
+</body>
+</html>
+<script type="text/javascript">
+	function submitdata(){
+	var career=document.getElementById("career").value;
+	var name=document.getElementById("name").value;
+	var roll=document.getElementById("roll").value
+	var mobile=document.getElementById("mobile").value;
+	var email=document.getElementById("email").value;
+	var place=document.getElementById("place").value;
+	// P.G
+	var pdegree=document.getElementById("pdegree").value;
+	var pinst=document.getElementById("pinst").value;
+	var pper=document.getElementById("pper").value;
+	var pyop=document.getElementById("pyop").value;
+	// Degree
+	var gdegree=document.getElementById("gdegree").value;
+	var ginst=document.getElementById("ginst").value;
+	var gper=document.getElementById("gper").value;
+	var gyop=document.getElementById("gyop").value;
+	// Intermediate
+	var idegree=document.getElementById("idegree").value;
+	var iinst=document.getElementById("iinst").value;
+	var iper=document.getElementById("iper").value;
+	var iyop=document.getElementById("iyop").value;
+	// Tenth
+	var tdegree=document.getElementById("tdegree").value;
+	var tinst=document.getElementById("tinst").value;
+	var tper=document.getElementById("tper").value;
+	var tyop=document.getElementById("tyop").value;
+
+var indexedDB=window.indexedDB || window.mozIndexedDB || window.msIndexedDB || window.webkitIndexedDB;
+var store;
+var open;
+var result;
+var tx;
+var request=indexedDB.open("database",1);
+ request.onupgradeneeded=function(e){
+ open=e.target.result;
+store=open.createObjectStore("resumedata",{keyPath:"name"});
+}
+request.onerror=function(e){
+	console.log("error"+e);
+
+}
+request.onsuccess=function(e){
+open=e.target.result;
+tx=open.transaction("resumedata","readwrite");
+store=tx.objectStore("resumedata");
+store.put({
+ 	career:career,
+ 	name:name,
+ 	roll:roll,
+ 	mobile:mobile,
+	email:email,
+	place:place,
+	education:[
+{
+	degree:pdegree,
+	inst:pinst,
+	per:pper,
+	yop:pyop
+},
+{
+	degree:gdegree,
+	inst:ginst,
+	per:gper,
+	yop:gyop
+},
+{
+	degree:idegree,
+	inst:iinst,
+	per:iper,
+	yop:iyop
+},
+{
+	degree:tdegree,
+	inst:tinst,
+	per:tper,
+	yop:tyop
+}
+
+
+	]
+
+});
+}
+window.open("index.html","_self");
+ }
+</script> 

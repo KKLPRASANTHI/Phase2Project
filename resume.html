@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Index</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body id="resume">
+	<div class="main">
+		<div class="left"></div>
+		<div class="right"></div>
+	</div>
+
+</body>
+</html>
+<script type="text/javascript">
+	let url=window.location.search;
+	let length=url.length;
+	let proname=url.slice(1,length);
+var indexedDB=window.indexedDB || window.mozIndexedDB || window.msIndexedDB || window.webkitIndexedDB;
+var store;
+var open;
+var result;
+var tx;
+var request=indexedDB.open("database",1);
+ request.onupgradeneeded=function(e){
+ open=e.target.result;
+store=open.createObjectStore("resumedata",{keyPath:"name"});
+}
+request.onerror=function(e){
+	console.log("error"+e);
+
+}
+request.onsuccess=function(e){
+open=e.target.result;
+tx=open.transaction("resumedata","readwrite");
+store=tx.objectStore("resumedata");
+var info=store.get(proname);
+info.onsuccess=function(data){
+	console.log(data.target.result);
+	display(data.target.result);
+}
+}
+var leftdiv=document.querySelector(".left");
+var rightdiv=document.querySelector(".right");
+function display(d){
+	var image=document.createElement("img");
+	image.src="profilepic.png";
+	leftdiv.append(image);
+
+ // var ee=document.createElement("h3");
+ // ee.textContent=d.name;
+ // left.append(ee);
+
+
+
+
+
+var proll=document.createElement("p");
+proll.textContent=d.roll;
+leftdiv.append(proll);
+
+// var inst=document.createElement("p");
+// inst.textContent=d.inst;
+// left.append(inst);
+
+var pemail=document.createElement("p");
+pemail.textContent=d.email;
+leftdiv.append(pemail);
+ 
+ var mobile=document.createElement("p");
+ mobile.textContent=d.mobile;
+ leftdiv.append(mobile);
+
+var plc=document.createElement("p");
+plc.textContent=d.place;
+leftdiv.append(plc);
+var hc=document.createElement("h1");
+hc.innerHTML="Career Objective";
+		rightdiv.append(hc);
+		var car=document.createElement("p");
+		car.textContent=d.career;
+		rightdiv.append(car);
+		var edu=document.createElement("h1");
+		edu.innerHTML="Education Details";
+		rightdiv.append(edu);
+		for(var i in d.education){
+			var ch4=document.createElement("h2");
+			ch4.textContent=d.education[i].degree;
+			rightdiv.append(ch4);
+			var ins=document.createElement("p");
+			ins.textContent=d.education[i].inst;
+			rightdiv.append(ins);
+			var pe=document.createElement("p");
+			pe.textContent=d.education[i].per;
+			rightdiv.append(pe);
+			var yp=document.createElement("p");
+			yp.textContent=d.education[i].yop;
+			rightdiv.append(yp);
+		}
+}
+
+</script>
